@@ -75,11 +75,23 @@ async function run() {
     });
 
     //uSER RELATED apIs
+
+    app.get('/users', async(req,res) => {
+      const result = await usersCollection.find().toArray();
+      res.send(result)
+    })
     app.post('/users', async(req,res) => {
       const userProfile = req.body;
       console.log(userProfile)
       const result = await usersCollection.insertOne(userProfile);
       res.send(result);
+    })
+
+    app.delete('/users/:id', async(req, res) => {
+      const id = req.params.id;
+      const quary = {_id: new ObjectId(id)}
+      const result = await usersCollection.deleteOne(quary)
+      res.send(result)
     })
 
 
